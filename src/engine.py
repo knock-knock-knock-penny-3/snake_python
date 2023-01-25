@@ -15,6 +15,8 @@ from pygame.constants import (
     USEREVENT
 )
 
+from utils import get_sound, get_sprite
+
 class Engine:
     """ Class docstring """
     GAME_STATE = {
@@ -31,6 +33,8 @@ class Engine:
     def __init__(self, title):
         pygame.init()
         self._canvas = display.set_mode((800, 600))
+        self._bg_image = get_sprite('bg_grass.jpg', (800, 600), False)
+        self._bg_sound = get_sound('background.wav')
         self._clock = pygame.time.Clock()
         self._state = self.GAME_STATE['START']
         pygame.display.set_caption(title)
@@ -40,6 +44,8 @@ class Engine:
 
     def mainloop(self):
         """ Min loop """
+        self._bg_sound.play(-1)
+
         while True:
             self.input()
             self.update()
@@ -78,7 +84,7 @@ class Engine:
 
     def draw(self):
         """ Game items draw """
-        self._canvas.fill((0, 0, 0))
+        self._canvas.blit(self._bg_image, (0, 0))
 
         display.flip()
         self._clock.tick(4)
