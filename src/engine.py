@@ -15,7 +15,7 @@ from pygame.constants import (
     USEREVENT,
 )
 
-from utils import get_sound, get_sprite
+from utils import get_sound, get_sprite, print_text
 
 
 class Engine:
@@ -80,6 +80,14 @@ class Engine:
     def draw(self):
         """Game items draw"""
         self._canvas.blit(self._bg_image, (0, 0))
+
+        if self._state == self.GAME_STATE["START"]:
+            message = {"SNAKE": 70, "Press ENTER to start": 50}
+            print_text(self._canvas, message)
+        else:
+            if self._state == self.GAME_STATE["END"]:
+                message = {"You died!": 70, f"Your score is: {self.score.points}": 50}
+                print_text(self._canvas, message)
 
         display.flip()
         self._clock.tick(4)
