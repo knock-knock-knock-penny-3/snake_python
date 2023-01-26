@@ -34,7 +34,7 @@ class Player(Sprite):
         self._snake.clear()
         self._snake.append(self._position)
 
-    def move(self, keydown):
+    def move(self, keydown, food):
         """docstring"""
         if self._alive:
             pos_x, pos_y = self._position
@@ -42,16 +42,19 @@ class Player(Sprite):
 
         self._position = (pos_x + dir_x, pos_y + dir_y)
 
-        self._update()
+        self._update(food)
 
-    def _update(self):
+    def _update(self, food):
         win_w, win_h = get_window_size()
 
         # snake eat food
         # to implement
 
+        # snake eat food
+        if self._position == food.position:
+            food.eaten()
         # snake eat itself
-        if self._snake.count(self._position):
+        elif self._snake.count(self._position):
             self.die()
         elif (
             self._position[0] < 0
