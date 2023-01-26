@@ -52,7 +52,7 @@ class HighScore:
             )
 
         if len(self._new_name) == 3:
-            self._highscores.append(("".join(self._new_name), points))
+            self._highscores.append(("".join(self._new_name).upper(), points))
             self._highscores = sorted(
                 self._highscores, key=lambda player: player[1], reverse=True
             )
