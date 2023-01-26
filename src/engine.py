@@ -16,6 +16,7 @@ from pygame.constants import (
 )
 
 from food import Food
+from highscore import HighScore
 from player import Player
 from score import Score
 from utils import get_sound, get_sprite, print_text
@@ -39,6 +40,7 @@ class Engine:
         }
         self._game = {
             "clock": pygame.time.Clock(),
+            "highscore": HighScore(),
             "score": Score(),
             "state": self.GAME_STATE["START"],
         }
@@ -84,6 +86,8 @@ class Engine:
                 ]:
                     self._init()
                     self._game["state"] = self.GAME_STATE["RUN"]
+                elif self.is_highscore:
+                    self._game["highscore"].add_char(event.key)
 
     def update(self):
         """Game data update"""
@@ -109,6 +113,18 @@ class Engine:
                     f"Your score is: {self._game['score'].points}": 50,
                 }
                 print_text(self._canvas, message)
+
+                self.is_highscore = self._game["highscore"].check(
+                    self._game["score"].points
+                )
+            elif self._game["state"] == self.GAME_STATE["HIGHSCORE"]:
+                if self.is_highscore:
+                    if self._game["highscore"].add_name(
+                        self._canvas, self._game["score"].points
+                    ):
+                        self.is_highscore = False
+                else:
+                    self._game["highscore"].print(self._canvas)
             else:
                 self.food.draw(self._canvas)
                 self.player.draw(self._canvas)

@@ -28,6 +28,17 @@ def get_sound(filename):
     return Sound(_resource_path(path))
 
 
+def get_font(filename, size):
+    """docstring"""
+    path = f"assets/fonts/{filename}"
+    return Font(_resource_path(path), size)
+
+
+def get_path(rel_path):
+    """docstring"""
+    return _resource_path(rel_path)
+
+
 def print_text(surface, texts, color=(4, 27, 4)):
     """docstring"""
     interline = 15

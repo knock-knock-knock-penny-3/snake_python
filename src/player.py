@@ -48,9 +48,6 @@ class Player(Sprite):
         win_w, win_h = get_window_size()
 
         # snake eat food
-        # to implement
-
-        # snake eat food
         if self._position == food.position:
             food.eaten()
         # snake eat itself
